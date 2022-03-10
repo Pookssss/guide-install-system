@@ -25,9 +25,9 @@ $sh_c "sudo groupadd --system prometheus"
 
 $sh_c "sudo chmod +x /usr/local/bin/mysqld_exporter"
 
-$sh_c "mysql -u root -e 'create user '\''mysqld_exporter'\''@'\''localhost'\'' identified by '\''mysqld_exporter'\'''"
+$sh_c "mysql -u root -e 'CREATE USER '\''exporter'\''@'\''localhost'\'' IDENTIFIED BY '\''PassW0rd'\'' WITH MAX_USER_CONNECTIONS 2 '\' '"
 
-$sh_c "mysql -u root -e 'grant PROCESS, REPLICATION CLIENT, SELECT on performance_schema.* to '\''mysqld_exporter'\''@'\''localhost'\'''"
+$sh_c "mysql -u root -e 'GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO '\''exporter'\''@'\''localhost'\'''"
 
 $sh_c "mysql -u root -e 'FLUSH PRIVILEGES'"
 
