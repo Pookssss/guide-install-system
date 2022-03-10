@@ -25,7 +25,7 @@ $sh_c "sudo groupadd --system prometheus"
 
 $sh_c "sudo chmod +x /usr/local/bin/mysqld_exporter"
 
-$sh_c "mysql -u root ! bash"
+$sh_c "mysql -u root bash"
 $sh_c "CREATE USER 'exporter'@'localhost' IDENTIFIED BY 'PassW0rd' WITH MAX_USER_CONNECTIONS 2;"
 $sh_c "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'localhost';"
 $sh_c "FLUSH PRIVILEGES;"
