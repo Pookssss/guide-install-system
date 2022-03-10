@@ -25,15 +25,12 @@ $sh_c "sudo groupadd --system prometheus"
 
 $sh_c "sudo chmod +x /usr/local/bin/mysqld_exporter"
 
-$sh_c "mysql -u root"
-
-$sh_c "CREATE USER 'exporter'@'localhost' IDENTIFIED BY 'PassW0rd' WITH MAX_USER_CONNECTIONS 2;"
-
-$sh_c "GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'localhost';"
-
-$sh_c "FLUSH PRIVILEGES;"
-
-$sh_c "exit"
+$sh_c "mysql -u root << EOF
+CREATE USER 'exporter'@'localhost' IDENTIFIED BY 'PassW0rd' WITH MAX_USER_CONNECTIONS 2;
+GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'localhost';
+FLUSH PRIVILEGES;
+exit;
+EOF"
 
 $sh_c "export DATA_SOURCE_NAME='exporter:PassW0rd@(localhost:3306)/'"
 
