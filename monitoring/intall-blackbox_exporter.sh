@@ -17,13 +17,15 @@ fi
 
 $sh_c "wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.20.0/blackbox_exporter-0.20.0.linux-amd64.tar.gz"
 
-$sh_c "tar xvzf blackbox_exporter-0.14.0.linux-amd64.tar.gz"
+$sh_c "tar xvzf blackbox_exporter-0.20.0.linux-amd64.tar.gz"
 
-$sh_c "cp blackbox_exporter /usr/local/bin"
+
+
+$sh_c "cp blackbox_exporter-0.20.0.linux-amd64/blackbox_exporter /usr/local/bin"
 
 $sh_c "sudo mkdir -p /etc/blackbox"
 
-$sh_c "cp blackbox.yml /etc/blackbox"
+$sh_c "cp blackbox_exporter-0.20.0.linux-amd64/blackbox.yml /etc/blackbox"
 
 $sh_c "useradd -rs /bin/false blackbox"
 
