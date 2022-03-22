@@ -21,19 +21,19 @@ $sh_c "tar xvzf blackbox_exporter-0.20.0.linux-amd64.tar.gz"
 
 
 
-$sh_c "cp blackbox_exporter-0.20.0.linux-amd64/blackbox_exporter /usr/local/bin"
+$sh_c "sudo cp blackbox_exporter-0.20.0.linux-amd64/blackbox_exporter /usr/local/bin"
 
 $sh_c "sudo mkdir -p /etc/blackbox"
 
-$sh_c "cp blackbox_exporter-0.20.0.linux-amd64/blackbox.yml /etc/blackbox"
+$sh_c "sudo cp blackbox_exporter-0.20.0.linux-amd64/blackbox.yml /etc/blackbox"
 
 $sh_c "useradd -rs /bin/false blackbox"
 
-$sh_c "chown blackbox:blackbox /usr/local/bin/blackbox_exporter"
+$sh_c "sudo chown blackbox:blackbox /usr/local/bin/blackbox_exporter"
 
-$sh_c "chown -R blackbox:blackbox /etc/blackbox/*"
+$sh_c "sudo chown -R blackbox:blackbox /etc/blackbox/*"
 
-$sh_c "cat << EOF >> /lib/systemd/system/blackbox.service
+$sh_c "sudo cat << EOF >> /lib/systemd/system/blackbox.service
 [Unit]
 Description=Blackbox Exporter Service
 Wants=network-online.target
@@ -44,8 +44,7 @@ Type=simple
 User=blackbox
 Group=blackbox
 ExecStart=/usr/local/bin/blackbox_exporter \
-  --config.file=/etc/blackbox/blackbox.yml \
-  --web.listen-address=":9115"
+  --config.file=/etc/blackbox/blackbox.yml 
 
 Restart=always
 
@@ -53,8 +52,12 @@ Restart=always
 WantedBy=multi-user.target
 EOF"
 
-$sh_c "systemctl enable blackbox.service"
+$sh_c "systemctl daemon-reload"
 
-$sh_c "systemctl start blackbox.service"
+$sh_c "sudo systemctl enable blackbox.service"
+
+$sh_c "sudo systemctl start blackbox.service"
+
+$sh_c "sudo systemctl status blackbox.service"
 
 $sh_c "curl http://localhost:9115/metrics"
