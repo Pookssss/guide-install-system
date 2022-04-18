@@ -1,0 +1,227 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-laravel
+  namespace: epro-ns
+  labels:
+    app: back-laravel
+spec:
+  selector:
+    app: back-laravel
+  type: NodePort
+  ports:
+    - port: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-laravel
+  namespace: epro-ns
+  labels:
+    app: back-laravel
+spec:
+  selector:
+    matchLabels:
+      app: back-laravel
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: back-laravel
+    spec:
+      containers:
+      - name: back-laravel
+        image: git.inet.co.th:5555/aekbadin.ch/inet_market/prod:v2.0-prod
+        imagePullPolicy: Always
+        env:
+        - name: APP_NAME
+          value: "Laravel"
+        - name: APP_ENV
+          value: "local"
+        - name: APP_KEY
+          value: "base64:cfoRr+jlhh0pe1KGWp8QRelkONDAVVh/WVeRPhFqgXY"
+        - name: APP_DEBUG
+          value: "true"
+        - name: APP_URL
+          value: "https://panit.sdi.inet.co.th"
+        #- name: APP_DEBUG
+        #  value: "true"
+        - name: LOG_CHANNEL
+          value: "stack"
+        - name: DB_CONNECTION
+          value: "mysql"
+        - name: DB_HOST
+          value: "192.168.1.11"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_DATABASE
+          value: "express_market"
+        - name: DB_USERNAME
+          value: "omnipotent"
+        - name: DB_PASSWORD
+          value: "EverybodyStartsToImproveBitsByBitsBetterAndFinallyTheyLevelUp"
+        - name: BROADCAST_DRIVER
+          value: "log"
+        - name: CACHE_DRIVER
+          value: "file"
+        - name: QUEUE_CONNECTION
+          value: "sync"
+        - name: SESSION_DRIVER
+          value: "file"
+        - name: SESSION_LIFETIME
+          value: "120"
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PASSWORD
+          value: "null"
+        - name: REDIS_PORT
+          value: "6379"
+        # - name: MAIL_MAILER
+        #   value: "smtp"
+        # - name: MAIL_HOST
+        #   value: "smtp.mailtrap.io"
+        # - name: MAIL_PORT
+        #   value: "2525"
+        # - name: MAIL_USERNAME
+        #   value: null
+        # - name: MAIL_PASSWORD
+        #   value: null
+        # - name: MAIL_ENCRYPTION
+        #   value: null
+        # - name: MAIL_FROM_ADDRESS
+        #   value: null
+        # - name: MAIL_FROM_NAME
+        #   value: "${APP_NAME}" 
+        - name: MAIL_MAILER
+          value: "smtp"
+        - name: MAIL_HOST
+          value: "onerelay.one.th"
+        - name: MAIL_PORT
+          value: "25"
+        - name: MAIL_USERNAME
+          value: "null"
+        - name: MAIL_PASSWORD
+          value: "null"
+        - name: MAIL_ENCRYPTION
+          value: "null"
+        - name: MAIL_FROM_ADDRESS
+          value: "noreply@mytest.com"
+        - name: MAIL_FROM_NAME
+          value: "Ultimate plus Online"
+        #- name: AWS_ACCESS_KEY_ID
+        #  value: ""
+        #- name: AWS_SECRET_ACCESS_KEY
+        #  value: ""
+        #- name: AWS_DEFAULT_REGION
+        #  value: "us-east-1"
+        #- name: AWS_BUCKET
+        #  value: ""
+        - name: PUSHER_APP_ID
+          value: ""
+        - name: PUSHER_APP_KEY
+          value: ""
+        - name: PUSHER_APP_SECRET
+          value: ""
+        - name: PUSHER_APP_CLUSTER
+          value: "mt1"
+        - name: MIX_PUSHER_APP_KEY
+          value: "${PUSHER_APP_KEY}"
+        - name: MIX_PUSHER_APP_CLUSTER
+          value: "${PUSHER_APP_CLUSTER}"
+        - name: ONEID_TEST  
+          value: "https://testoneid.inet.co.th"
+        - name: ONEID_PRODUCTION 
+          value: "https://one.th"
+        - name: FRONTEND_IP 
+          value: "https://testsitepanit.one.th/redirect"
+        - name: BACKEND_IP  
+          value: "https://testsitepanit.one.th/backend"
+        - name: FRONTED_IP_SERVER 
+          value: "https://testsitepanit.one.th"
+        - name: REDIRECT_FRONTEND 
+          value: "https://testsitepanit.one.th"
+        - name: ONEID_SERVER 
+          value: "https://testoneid.inet.co.th"
+        - name: BACKEND_IP_SERVER
+          value: " "
+        - name: PASSWORD_FOR_REGISTER_MARKET 
+          value: "1234"
+        # - name: ONEID_TEST  
+        #   value: "https://testoneid.inet.co.th"
+        # - name: ONEID_PRODUCTION 
+        #   value: "https://one.th"
+        # - name: FRONTEND_IP 
+        #   value: "https://testsitepanit.one.th/redirect"
+        # - name: BACKEND_IP  
+        #   value: "https://testsitepanit.one.th/backend"
+        # - name: FRONTED_IP_SERVER 
+        #   value: "https://testsitepanit.one.th"
+        # - name: REDIRECT_FRONTEND 
+        #   value: "https://testsitepanit.one.th"
+        # - name: ONEID_SERVER 
+        #   value: "https://testoneid.inet.co.th"
+        # - name: BACKEND_IP_SERVER
+        #   value: " "
+        # - name: PASSWORD_FOR_REGISTER_MARKET 
+        #   value: "1234"
+        - name: MOBILYST
+          value: "10.0.2.103:4000/mobilyst"
+        - name: EMAIL_SELLER
+          value: "testfrontend@one.th"
+        - name: PAYMENT_IP 
+          value: "https://testpayment-cashier.inet.co.th/checkout"
+        - name: KEY_PAYMENT 
+          value: "../key/uat_morpromt.key"
+        # - name: PAYMENT_IP 
+        #   value: "https://payment-cashier.inet.co.th/checkout"
+        - name: JWT_SECRET
+          value: "vIqjAHJuQ0LcIuKG0M8jRWZ2h7Q7WGSN05CeeQ6woFXlmIuhVaodiscHA0Sls7gY"
+        - name: PRODUCT_IMAGE_IP
+          value: "https://testinetmarket.one.th/backend"
+        - name: ONECHAT_URL
+          value: "https://uatchat-public.one.th:8034/api/v1/push_message"
+        - name: ONECHAT_TOKEN
+          value: "Ad4e8d996cf4651d9bdf8de51728fe7c3a3c952beaac745b2803fbb2ce4e99a7264d3f936f6264692b2d87693054043af"
+        - name: BOT_ID
+          value: "B06413896f91056f9b3a529d353dbec17"
+        - name: client_id 
+          value: "486"
+        - name: client_secret 
+          value: "zBIedBcUWVSGnY45DQnwdWbOXPYeNzuPdvGJffZR"
+        - name: Create_Official_Bot 
+          value: "https://uatchat-manage.one.th/go_api/api/v1/create-bot-by-oneid"
+        # - name: Create_Official_Bot 
+        #   value: "https://chat-api.one.th/go_api/api/v1/create-bot-by-oneid"
+        - name: Bot_Official 
+          value: "https://uatchat-manage.one.th:8997/api/v1/"
+        # - name: Bot_Official 
+        #   value: "https://chat-api.one.th/manage/api/v1/"
+        - name: Gen_Token_Service 
+          value: "https://uatchat-manage.one.th:8997/api/v1/gen_tokenservice"
+        # - name: Gen_Token_Service 
+        #   value: "https://chat-api.one.th/manage/api/v1/gen_tokenservice"
+        - name: AWS_ACCESS_KEY_ID
+          value: "3FTTQZTUGHVGNDBN7VM5"
+        - name: AWS_SECRET_ACCESS_KEY 
+          value: "91NzRdQ8ie+SI21hdqkdPl/LojUI8PsqXc+Tbm6G"
+        - name: AWS_DEFAULT_REGION 
+          value: "us-east-1"
+        - name: AWS_BUCKET 
+          value: "e-pro-uat"
+        - name: AWS_URL 
+          value: "https://s3gw.inet.co.th:8082/e-pro-uat/"
+        - name: AWS_ENDPOINT
+          value: "https://s3gw.inet.co.th:8082"
+        - name: API_KEY_Express
+          value: "https://testinetmarket.one.th/backend_2/express/checkGetAPIKey"
+        - name: CKCOUNTBBL 
+          value: "1"
+        - name: CKCOUNTSCB 
+          value: "0"
+        ports:
+        - containerPort: 80
+          protocol: TCP
+          name: back-laravel
+      imagePullSecrets:
+        - name: regcred
