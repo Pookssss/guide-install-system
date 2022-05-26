@@ -2,6 +2,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   annotations:
+  # name with match service
   name: juo-back
   namespace: juo
 spec:
@@ -11,5 +12,6 @@ spec:
     ##### apiVersion with match apiVersion > deployment from file deploy service (apps / deployment / api)
     apiVersion: apps/v1
     kind: Deployment
+    # name with match service
     name: juo-back
   targetCPUUtilizationPercentage: 1
