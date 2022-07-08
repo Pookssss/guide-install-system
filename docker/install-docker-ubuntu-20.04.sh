@@ -33,17 +33,19 @@ $sh_c "sudo mkdir -p /etc/apt/keyrings"
 
 $sh_c "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg"
 
-$sh_c 'echo \
+$sh_c 'sudo echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null '
 
 # Step 2 : Install Docker Engine
-$sh_c "apt-get update -qq > /dev/null"
+$sh_c "sudo apt-get update -qq > /dev/null"
        
-$sh_c "apt-get install -qq docker-ce docker-ce-cli containerd.io docker-compose-plugin > /dev/null"
+$sh_c "sudo apt-get install -qq docker-ce docker-ce-cli containerd.io docker-compose-plugin > /dev/null"
 
 $sh_c "sudo groupadd docker"
 
 $sh_c "sudo usermod -aG docker $USER"
+
+$sh_c "sudo chmod 666 /var/run/docker.sock"
 
 $sh_c "docker ps"
